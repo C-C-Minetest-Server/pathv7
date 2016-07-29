@@ -2,7 +2,7 @@
 
 local YMAXMINP = -32 -- Maximum minp.y of generated chunks
 					-- (-32 for default mapgen v6. 48, 128, 208 for higher)
-local HSAMP = 0.05 -- Height select amplitude. Maximum steepness of paths
+local HSAMP = 0.03 -- Height select amplitude. Maximum steepness of paths
 local HSOFF = 0.0 -- Height select offset.
 					-- Bias paths towards lower (-) or higher (+) terrain
 local TCOL = 0.3 -- Column noise threshold. Bridge column density
@@ -40,7 +40,7 @@ local np_select = {
 	spread = {x = 500, y = 500, z = 500},
 	seed = 4213,
 	octaves = 5, -- default 6
-	persist = 0.4 -- default 0.7
+	persist = 0.3 -- default 0.7
 }
 
 -- Mod path parameters
@@ -246,240 +246,21 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				-- TODO allow path above
 				local pathy = math.floor(math.min(math.max(tlevel, 7), 42))
 
-				-- paths a and b
 				if (n_patha >= 0 and n_xprepatha < 0) -- detect sign change of noise
 						or (n_patha < 0 and n_xprepatha >= 0)
 						or (n_patha >= 0 and n_zprepatha < 0)
 						or (n_patha < 0 and n_zprepatha >= 0)
+
 						or (n_pathb >= 0 and n_xprepathb < 0)
 						or (n_pathb < 0 and n_xprepathb >= 0)
 						or (n_pathb >= 0 and n_zprepathb < 0)
-						or (n_pathb < 0 and n_zprepathb >= 0) then
-					if pathy > y1 then
-						-- build columns through this chunk
-						if abscol < TCOL then
-							local vi = area:index(x, y1, z)
-							for y = 1, sidelen do
-								local nodid = data[vi]
-								if nodid == c_stone
-										or nodid == c_destone
-										or nodid == c_sastone
-										or nodid == c_ice then
-									break
-								else
-									data[vi] = c_column
-								end
-								vi = vi - emerlen
-							end
-						end
-					elseif pathy >= y0 then
-						-- path in chunk
-						-- scan disk at path level for dirt
-						local wood = true
-						for k = -1, 1 do
-							local vi = area:index(x - 1, pathy, z + k)
-							for i = -1, 1 do
-								local nodid = data[vi]
-								if nodid == c_dirt
-										or nodid == c_grass
-										or nodid == c_dirtsnow
-										or nodid == c_drygrass then
-									wood = false -- use dirt path node
-								end
-								vi = vi + 1
-							end
-						end
-						-- scan disk above path for stone, ice
-						local tunnel = false
-						local excatop
-						for k = -1, 1 do
-							local vi = area:index(x - 1, pathy + 5, z + k)
-							for i = -1, 1 do
-								local nodid = data[vi]
-								if nodid == c_stone
-										or nodid == c_destone
-										or nodid == c_sastone
-										or nodid == c_ice then
-									tunnel = true
-								end
-								vi = vi + 1
-							end
-						end
-						if tunnel then
-							excatop = pathy + 5 -- tunnel
-						else
-							excatop = y1 -- excavate to chunk top
-						end
-						-- place path brush
-						if wood then
-							local vi = area:index(x - 1, pathy, z - 1)
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairne
-							end
-							vi = vi + 1
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairn
-							end
-							vi = vi + 1
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairnw
-							end
+						or (n_pathb < 0 and n_zprepathb >= 0)
 
-							local vi = area:index(x - 1, pathy, z)
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_staire
-							end
-							vi = vi + 1
-							data[vi] = c_wood
-							vi = vi + 1
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairw
-							end
-	
-							local vi = area:index(x - 1, pathy, z + 1)
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairse
-							end
-							vi = vi + 1
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairs
-							end
-							vi = vi + 1
-							if data[vi] ~= c_wood
-									and data[vi] ~= c_path then
-								data[vi] = c_stairsw
-							end
-						else
-							local vi = area:index(x - 1, pathy, z - 1)
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairne
-							end
-							vi = vi + 1
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairn
-							end
-							vi = vi + 1
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairnw
-							end
-	
-							local vi = area:index(x - 1, pathy, z)
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstaire
-							end
-							vi = vi + 1
-							data[vi] = c_path
-							vi = vi + 1
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairw
-							end
-	
-							local vi = area:index(x - 1, pathy, z + 1)
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairse
-							end
-							vi = vi + 1
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairs
-							end
-							vi = vi + 1
-							if data[vi] ~= c_path
-									and data[vi] ~= c_wood then
-								data[vi] = c_pstairsw
-							end
-						end
-						-- excavate above path
-						for y = pathy + 1, excatop do
-							for k = -1, 1 do
-								local vi = area:index(x - 1, y, z + k)
-								for i = -1, 1 do
-									local nodid = data[vi]
-									if y == excatop then
-										if nodid == c_dirt
-												or nodid == c_grass
-												or nodid == c_drygrass
-												or nodid == c_dirtsnow then
-											data[vi] = c_stone
-										elseif nodid == c_desand then
-											data[vi] = c_destone
-										elseif tunnel
-												and math.random() < 0.05
-												and (nodid == c_stone
-												or nodid == c_destone
-												or nodid == c_sastone
-												or nodid == c_ice) then
-											data[vi] = c_meselamp
-										end
-									else
-										if nodid ~= c_wood
-												and nodid ~= c_path
-												and nodid ~= c_stairn
-												and nodid ~= c_stairs
-												and nodid ~= c_staire
-												and nodid ~= c_stairw
-												and nodid ~= c_stairne
-												and nodid ~= c_stairnw
-												and nodid ~= c_stairse
-												and nodid ~= c_stairsw
-												and nodid ~= c_pstairn
-												and nodid ~= c_pstairs
-												and nodid ~= c_pstaire
-												and nodid ~= c_pstairw
-												and nodid ~= c_pstairne
-												and nodid ~= c_pstairnw
-												and nodid ~= c_pstairse
-												and nodid ~= c_pstairsw then
-											data[vi] = c_air
-										end
-									end
-									vi = vi + 1
-								end
-							end
-						end
-						-- bridge structure
-						if wood then
-							local vi = area:index(x, pathy - 1, z)
-							data[vi] = c_column
-							vi = vi - emerlen
-							data[vi] = c_column
-							-- columns
-							if abscol < TCOL then
-								local vi = area:index(x, pathy - 3, z)
-								for y = pathy - 3, y0, -1 do
-									local nodid = data[vi]
-									if nodid == c_stone
-											or nodid == c_destone
-											or nodid == c_sastone
-											or nodid == c_ice then
-										break
-									else
-										data[vi] = c_column
-									end
-									vi = vi - emerlen
-								end
-							end
-						end
-					end
-
-				-- paths c and d
-				elseif (n_pathc >= 0 and n_xprepathc < 0) -- detect sign change of noise
+						or (n_pathc >= 0 and n_xprepathc < 0)
 						or (n_pathc < 0 and n_xprepathc >= 0)
 						or (n_pathc >= 0 and n_zprepathc < 0)
 						or (n_pathc < 0 and n_zprepathc >= 0)
+
 						or (n_pathd >= 0 and n_xprepathd < 0)
 						or (n_pathd < 0 and n_xprepathd >= 0)
 						or (n_pathd >= 0 and n_zprepathd < 0)
@@ -522,7 +303,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 								vi = vi + 1
 							end
 						end
-						-- scan disk above path for stone
+						-- scan disk 5 nodes above path for stone/ice
 						local tunnel = false
 						local excatop
 						for k = -2, 2 do
@@ -652,7 +433,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 								data[vi] = c_pstairsw
 							end
 						end
-						-- excavate
+						-- excavate above path
 						for y = pathy + 1, excatop do
 							for k = -2, 2 do
 								local vi = area:index(x - 2, y, z + k)
@@ -674,7 +455,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 												or nodid == c_ice) then
 											data[vi] = c_meselamp
 										end
-									else
+									elseif y <= pathy + 4 then
 										if nodid ~= c_wood
 												and nodid ~= c_path
 												and nodid ~= c_stairn
@@ -695,6 +476,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 												and nodid ~= c_pstairsw then
 											data[vi] = c_air
 										end
+									else
+										data[vi] = c_air
 									end
 									vi = vi + 1
 								end
