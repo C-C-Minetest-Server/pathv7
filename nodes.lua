@@ -2,7 +2,7 @@ minetest.register_node("pathv7:junglewood", {
 	description = "Mod jungle wood",
 	tiles = {"default_junglewood.png"},
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -10,7 +10,7 @@ minetest.register_node("pathv7:bridgewood", {
 	description = "Bridge wood",
 	tiles = {"pathv7_bridgewood.png"},
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -20,7 +20,7 @@ minetest.register_node("pathv7:stairn", { -- stair rising to the north
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -37,7 +37,7 @@ minetest.register_node("pathv7:stairs", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -54,7 +54,7 @@ minetest.register_node("pathv7:staire", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -71,7 +71,7 @@ minetest.register_node("pathv7:stairw", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -88,7 +88,7 @@ minetest.register_node("pathv7:stairne", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -105,7 +105,7 @@ minetest.register_node("pathv7:stairnw", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -122,7 +122,7 @@ minetest.register_node("pathv7:stairse", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -139,7 +139,7 @@ minetest.register_node("pathv7:stairsw", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	node_box = {
 		type = "fixed",
 		fixed = {

@@ -1,7 +1,7 @@
 -- Parameters
 
-local YMAXMINP = -32 -- Maximum minp.y of generated chunks
-local HSAMP = 0.03 -- Height select amplitude. Maximum steepness of paths
+local HSAMP = 0.025 -- Height select amplitude.
+					-- Controls maximum steepness of paths.
 
 -- Mapgen v7 noises
 
@@ -127,7 +127,7 @@ local nbuf_column
 -- On generated function
 
 minetest.register_on_generated(function(minp, maxp, seed)
-	if minp.y < -32 or minp.y > YMAXMINP then
+	if minp.y > 0 or maxp.y < 0 then
 		return
 	end
 
@@ -233,9 +233,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				end
 				local tblend = 0.5 + HSAMP * (select - 0.5)
 				tblend = math.min(math.max(tblend, 0), 1)
-				local tlevel = base * tblend + alt * (1 - tblend)
+				local tlevel = math.floor(base * tblend + alt * (1 - tblend))
 				-- TODO allow path above
-				local pathy = math.floor(math.min(math.max(tlevel, 7), 42))
+				local pathy = math.min(math.max(tlevel, 7), 42)
 
 				if (n_patha >= 0 and n_xprepatha < 0) -- detect sign change of noise
 						or (n_patha < 0 and n_xprepatha >= 0)
@@ -298,7 +298,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 						if tunnel then
 							excatop = pathy + 5 -- tunnel
 						else
-							excatop = y1 -- excavate to chunk top
+							excatop = y1 + 16 -- excavate to vm top
 						end
 
 						-- place path node brush
