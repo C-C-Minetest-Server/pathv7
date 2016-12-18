@@ -160,6 +160,11 @@ local nbuf_pathd
 local nbuf_column
 
 
+-- Localise data buffer
+
+local dbuf
+
+
 -- On generated function
 
 minetest.register_on_generated(function(minp, maxp, seed)
@@ -201,7 +206,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
-	local data = vm:get_data()
+	local data = vm:get_data(dbuf)
 
 	local ni = 1
 	for z = z0 - 3, z1 + 2 do
