@@ -1,10 +1,4 @@
-minetest.register_node("pathv7:junglewood", {
-	description = "Mod jungle wood",
-	tiles = {"default_junglewood.png"},
-	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
-})
+minetest.register_alias("pathv7:junglewood","default:junglewood")
 
 minetest.register_node("pathv7:bridgewood", {
 	description = "Bridge wood",
@@ -29,10 +23,11 @@ minetest.register_node("pathv7:stairn", { -- stair rising to the north
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_junglewood",
 })
 
 minetest.register_node("pathv7:stairs", {
-	description = "Jungle wood stair S",
+	description = "Jungle Wood Stair S",
 	tiles = {"default_junglewood.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -46,6 +41,7 @@ minetest.register_node("pathv7:stairs", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_junglewood",
 })
 
 minetest.register_node("pathv7:staire", {
@@ -63,6 +59,8 @@ minetest.register_node("pathv7:staire", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_junglewood",
+
 })
 
 minetest.register_node("pathv7:stairw", {
@@ -80,6 +78,8 @@ minetest.register_node("pathv7:stairw", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_junglewood",
+
 })
 
 minetest.register_node("pathv7:stairne", {
@@ -97,6 +97,7 @@ minetest.register_node("pathv7:stairne", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_outer_junglewood",
 })
 
 minetest.register_node("pathv7:stairnw", {
@@ -114,6 +115,7 @@ minetest.register_node("pathv7:stairnw", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_outer_junglewood",
 })
 
 minetest.register_node("pathv7:stairse", {
@@ -131,6 +133,7 @@ minetest.register_node("pathv7:stairse", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_outer_junglewood",
 })
 
 minetest.register_node("pathv7:stairsw", {
@@ -148,4 +151,12 @@ minetest.register_node("pathv7:stairsw", {
 		},
 	},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "stairs:stair_outer_junglewood",
+})
+
+-- "pathv7:bridgewood","default:junglewood"
+minetest.register_craft({
+	output = "default:junglewood",
+	recipe = {"pathv7:bridgewood"},
+	type = "shapeless",
 })

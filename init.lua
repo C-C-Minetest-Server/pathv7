@@ -104,7 +104,7 @@ dofile(minetest.get_modpath("pathv7") .. "/nodes.lua")
 
 -- Constants
 
-local c_wood    = minetest.get_content_id("pathv7:junglewood")
+local c_wood    = minetest.get_content_id("default:junglewood")
 local c_column  = minetest.get_content_id("pathv7:bridgewood")
 local c_stairn  = minetest.get_content_id("pathv7:stairn")
 local c_stairs  = minetest.get_content_id("pathv7:stairs")
@@ -194,7 +194,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	nobj_pathc  = nobj_pathc  or minetest.get_perlin_map(np_pathc,  chulens)
 	nobj_pathd  = nobj_pathd  or minetest.get_perlin_map(np_pathd,  chulens)
 	nobj_column = nobj_column or minetest.get_perlin_map(np_column, chulens)
-	
+
 	local nvals_base   = nobj_base  :get2dMap_flat(minpos, nbuf_base)
 	local nvals_alt    = nobj_alt   :get2dMap_flat(minpos, nbuf_alt)
 	local nvals_select = nobj_select:get2dMap_flat(minpos, nbuf_select)
@@ -203,7 +203,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local nvals_pathc  = nobj_pathc :get2dMap_flat(minpos, nbuf_pathc)
 	local nvals_pathd  = nobj_pathd :get2dMap_flat(minpos, nbuf_pathd)
 	local nvals_column = nobj_column:get2dMap_flat(minpos, nbuf_column)
-	
+
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
 	local data = vm:get_data(dbuf)
@@ -328,7 +328,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 							local nodid = data[vi]
 							if nodid ~= c_stone
 									and nodid ~= c_destone
-									and nodid ~= c_sastone then		
+									and nodid ~= c_sastone then
 								data[vi] = c_column
 							end
 							vi = vi + 1
@@ -429,7 +429,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			ni = ni + 1
 		end
 	end
-	
+
 	vm:set_data(data)
 	vm:set_lighting({day = 0, night = 0})
 	vm:calc_lighting()
